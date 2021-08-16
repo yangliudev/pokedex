@@ -1,9 +1,35 @@
-import type { NextPage } from 'next'
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from '../styles/Home.module.css'
+import React, { useEffect, useState, FC } from "react";
+import type { NextPage } from "next";
+import Head from "next/head";
+import Image from "next/image";
+import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
+  interface Props {
+    src: string;
+    width: number;
+    quality: number;
+  }
+
+  const [pokemonData, setPokemonData] = useState([]);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    const res = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=20");
+    const data = await res.json();
+    console.log("data", data);
+    setPokemonData(data);
+  };
+
+  const PokemonDataMapped = pokemonData.results.map((item, index) => (
+    <div key={index}>
+      <p>{item}</p>{" "}
+    </div>
+  ));
+
   return (
     <div className={styles.container}>
       <Head>
@@ -13,17 +39,28 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Pokédex
-        </h1>
+        <h1 className={styles.title}>Pokédex</h1>
         <Image src="/pokeball.png" alt="Pokeball" width={120} height={120} />
       </main>
+
+      {/* <p>{JSON.stringify(pokemonData.results)}</p> */}
+      <div>
+        {/* <PokemonDataMapped /> */}
+        {PokemonDataMapped}
+      </div>
+      <Image
+        alt="pokemon"
+        src="https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/1.png?raw=true"
+        width={200}
+        height={200}
+        layout="fixed"
+      />
 
       <footer className={styles.footer}>
         <p>Developed by Yang Liu &#169; 2021</p>
       </footer>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;
