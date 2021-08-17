@@ -27,7 +27,20 @@ const Home: NextPage = () => {
 
   const PokemonDataMapped = pokemonData.map((item: any, index: number) => (
     // <div key={index}>
-    <a key={index} href="https://nextjs.org/docs" className={styles.card}>
+    <a
+      key={index}
+      href={`https://bulbapedia.bulbagarden.net/wiki/${item.name}_(Pok%C3%A9mon)`}
+      className={styles.card}
+    >
+      <Image
+        alt="pokemon"
+        src={`https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/${
+          index + 1
+        }.png?raw=true`}
+        width={200}
+        height={200}
+        layout="fixed"
+      />
       <p>{item.name}</p>
     </a>
     // </div>
@@ -46,14 +59,6 @@ const Home: NextPage = () => {
         <Image src="/pokeball.png" alt="Pokeball" width={120} height={120} />
         <div className={styles.grid}>{PokemonDataMapped}</div>
       </main>
-
-      {/* <Image
-        alt="pokemon"
-        src="https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/1.png?raw=true"
-        width={200}
-        height={200}
-        layout="fixed"
-      /> */}
 
       <footer className={styles.footer}>
         <p>Developed by Yang Liu &#169; 2021</p>
