@@ -20,14 +20,17 @@ const Home: NextPage = () => {
   const getData = async () => {
     const res = await fetch("https://pokeapi.co/api/v2/pokemon/?limit=20");
     const data = await res.json();
-    console.log("data", data);
-    setPokemonData(data);
+    // console.log("data", data);
+    // console.log("data results", data.results);
+    setPokemonData(data.results);
   };
 
-  const PokemonDataMapped = pokemonData.results.map((item, index) => (
-    <div key={index}>
-      <p>{item}</p>{" "}
-    </div>
+  const PokemonDataMapped = pokemonData.map((item: any, index: number) => (
+    // <div key={index}>
+    <a key={index} href="https://nextjs.org/docs" className={styles.card}>
+      <p>{item.name}</p>
+    </a>
+    // </div>
   ));
 
   return (
@@ -41,20 +44,16 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <h1 className={styles.title}>Pokédex</h1>
         <Image src="/pokeball.png" alt="Pokeball" width={120} height={120} />
+        <div className={styles.grid}>{PokemonDataMapped}</div>
       </main>
 
-      {/* <p>{JSON.stringify(pokemonData.results)}</p> */}
-      <div>
-        {/* <PokemonDataMapped /> */}
-        {PokemonDataMapped}
-      </div>
-      <Image
+      {/* <Image
         alt="pokemon"
         src="https://github.com/PokeAPI/sprites/blob/master/sprites/pokemon/other/official-artwork/1.png?raw=true"
         width={200}
         height={200}
         layout="fixed"
-      />
+      /> */}
 
       <footer className={styles.footer}>
         <p>Developed by Yang Liu &#169; 2021</p>
