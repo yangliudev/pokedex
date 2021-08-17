@@ -55,8 +55,16 @@ const Home: NextPage = () => {
       </Head>
 
       <main className={styles.main}>
-        <h1 className={styles.title}>Pokédex</h1>
-        <Image src="/pokeball.png" alt="Pokeball" width={120} height={120} />
+        <div className={styles.flexRow}>
+          <h1 className={styles.title}>Pokédex</h1>
+          <Image
+            src="/pokeball.png"
+            alt="Pokeball"
+            width={120}
+            height={120}
+            layout="fixed"
+          />
+        </div>
         <div className={styles.grid}>{PokemonDataMapped}</div>
       </main>
 
