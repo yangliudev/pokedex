@@ -1,7 +1,10 @@
 import React, { useEffect, useState, FC } from "react";
+import "bootstrap/dist/css/bootstrap.min.css";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { Container, Row, Col } from "react-bootstrap";
+
 import styles from "../styles/Home.module.css";
 
 const Home: NextPage = () => {
@@ -54,7 +57,26 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className={styles.main}>
+      {/* In bootstrap we have a total of 12 units */}
+
+      <Container>
+        <Row>
+          <Col md={6}>1 col</Col>
+          <Col md={6}>2 col</Col>
+          <Col md={6}>3 col</Col>
+          <Col md={6}>4 col</Col>
+          <Col md={6}>5 col</Col>
+          <Col md={6}>6 col</Col>
+          <Col md={6}>7 col</Col>
+          <Col md={6}>8 col</Col>
+          <Col md={6}>9 col</Col>
+          <Col md={6}>10 col</Col>
+          <Col md={6}>11 col</Col>
+          <Col md={6}>12 col</Col>
+        </Row>
+      </Container>
+
+      {/* <main className={styles.main}>
         <div className={styles.flexRow}>
           <h1 className={styles.title}>Pokédex</h1>
           <Image
@@ -66,11 +88,11 @@ const Home: NextPage = () => {
           />
         </div>
         <div className={styles.grid}>{PokemonDataMapped}</div>
-      </main>
+      </main> */}
 
-      <footer className={styles.footer}>
+      {/* <footer className={styles.footer}>
         <p>Developed by Yang Liu &#169; 2021</p>
-      </footer>
+      </footer> */}
     </div>
   );
 };
