@@ -4,6 +4,7 @@ import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
 import { Container, Row, Col } from "react-bootstrap";
+import "animate.css";
 
 import styles from "../styles/Home.module.css";
 
@@ -59,18 +60,22 @@ const Home: NextPage = () => {
       <main className={styles.main}>
         <div className={styles.flexRow}>
           <h1 className={styles.title}>Pokédex</h1>
-          <Image
-            src="/pokeball.png"
-            alt="Pokeball"
-            width={120}
-            height={120}
-            layout="fixed"
-          />
+          <div className="animate__animated animate__headShake animate__infinite">
+            <Image
+              src="/pokeball.png"
+              alt="Pokeball"
+              width={120}
+              height={120}
+              layout="fixed"
+            />
+          </div>
         </div>
       </main>
 
       <Container>
-        <Row>{PokemonDataMapped}</Row>
+        <Row className="animate__animated animate__fadeInDown ">
+          {PokemonDataMapped}
+        </Row>
       </Container>
 
       <footer className={styles.footer}>
