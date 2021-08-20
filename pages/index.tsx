@@ -3,6 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import { Container, Row, Col } from "react-bootstrap";
 import "animate.css";
 
@@ -71,6 +72,10 @@ const Home: NextPage = () => {
           </div>
         </div>
       </main>
+
+      <Link href="/test">
+        <h1 style={{ textAlign: "center" }}>TEST - CLICK ME</h1>
+      </Link>
 
       <Container>
         <Row className="animate__animated animate__fadeInDown ">
