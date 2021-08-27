@@ -14,6 +14,8 @@ const Test: NextPage = () => {
     tab2: false,
   });
 
+  const [isImageRotated, setIsImageRotated] = useState(false);
+
   const switchTab1 = () => {
     console.log("tab 1");
     setTabState({
@@ -27,6 +29,10 @@ const Test: NextPage = () => {
       tab1: false,
       tab2: true,
     });
+  };
+
+  const rotateImage = () => {
+    setIsImageRotated(!isImageRotated);
   };
 
   return (
@@ -91,14 +97,21 @@ const Test: NextPage = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <div>
-          <MyImage
-            src="/right-arrow.png"
+        <ImageRotateWrapper
+          isImageRotated={isImageRotated}
+          onClick={() => rotateImage()}
+        >
+          <Image
+            src={
+              isImageRotated
+                ? "https://video-react.js.org/assets/logo.png"
+                : "https://www.shareicon.net/data/128x128/2016/08/01/640324_logo_512x512.png"
+            }
             alt="Pokeball"
-            width={100}
-            height={100}
+            width={150}
+            height={150}
           />
-        </div>
+        </ImageRotateWrapper>
       </BoxContainer>
     </div>
   );
@@ -156,13 +169,34 @@ const BoxBody = styled.div`
 `;
 
 const MyImage = styled(Image)`
+  // rotate {
+  //   animation: rotate-keyframes 1s;
+  // }
+
+  // @keyframes rotate-keyframes {
+  //   from {
+  //     transform: rotate(0deg);
+  //   }
+
+  //   to {
+  //     transform: rotate(180deg);
+  //   }
+  // }
+
+  // overflow: hidden;
+  // transition-duration: 0.8s;
+  // transition-property: transform;
+  // :hover {
+  //   transform: rotate(360deg);
+  //   -webkit-transform: rotate(360deg);
+  // }
+`;
+
+const ImageRotateWrapper = styled.div<{ isImageRotated: boolean }>`
+  transform: rotate(0deg);
   overflow: hidden;
-  transition-duration: 0.8s;
-  transition-property: transform;
-  :hover {
-    transform: rotate(360deg);
-    -webkit-transform: rotate(360deg);
-  }
+  transition: all 0.3s ease-out;
+  transform: ${(props) => props.isImageRotated && "transform: rotate(360deg)"};
 `;
 
 export default Test;
