@@ -89,6 +89,17 @@ const Test: NextPage = () => {
           )}
         </BoxWrapper>
       </BoxContainer>
+
+      <BoxContainer>
+        <div>
+          <MyImage
+            src="/right-arrow.png"
+            alt="Pokeball"
+            width={100}
+            height={100}
+          />
+        </div>
+      </BoxContainer>
     </div>
   );
 };
@@ -142,6 +153,16 @@ const BoxBody = styled.div`
   // background-color: #ecfaff;
   font-size: 16px;
   // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+`;
+
+const MyImage = styled(Image)`
+  overflow: hidden;
+  transition-duration: 0.8s;
+  transition-property: transform;
+  :hover {
+    transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+  }
 `;
 
 export default Test;
