@@ -41,33 +41,25 @@ const Test: NextPage = () => {
 
   // Testing for mapped image rotating component
 
-  const [isImageRotated, setIsImageRotated] = useState(false);
+  const [itemArray, setItemArray] = useState([false, false, false]);
 
-  const [itemArray, setItemArray] = useState({
-    Item1: false,
-    Item2: false,
-    Item3: false,
-  });
-
-  const rotateImage = (key, value) => {
-    setItemArray({
-      ...itemArray,
-      [key]: !value,
-    });
+  const rotateImage = (index: number) => {
+    let newItemArray = [...itemArray];
+    newItemArray[index] = !newItemArray[index];
+    setItemArray(newItemArray);
   };
 
   const ItemArrayComponent: Function = (): JSX.Element[] => {
-    return Object.keys(itemArray).map((item: any, index: number) => (
-      <Bar key={index}>
-        <p style={{ fontSize: 40 }}>{item}</p>
-        <ImageRotateWrapper
-          isImageRotated={itemArray[item]}
-          //animate={itemArray[item] ? { rotate: 90 } : { rotate: 0 }}
-          onClick={() => rotateImage(item, itemArray[item])}
-        >
-          <Image src="/right-arrow.png" alt="Pokeball" width={50} height={50} />
-        </ImageRotateWrapper>
-      </Bar>
+    return itemArray.map((item: boolean, index: number) => (
+      <ImageTestWrapper onClick={() => rotateImage(index)} key={index}>
+        <MyImageMap
+          src="/right-arrow.png"
+          alt="test"
+          width={50}
+          height={50}
+          isImageRotated={itemArray[index]}
+        />
+      </ImageTestWrapper>
     ));
   };
 
@@ -128,6 +120,7 @@ const Test: NextPage = () => {
       <BoxContainer>
         <ItemArrayComponent />
       </BoxContainer>
+
       <ImageTestWrapper onClick={() => rotateArrow()}>
         <MyImage
           src="/right-arrow.png"
@@ -192,17 +185,9 @@ const BoxBody = styled.div`
   // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 `;
 
-const ImageRotateWrapper = styled.div<{
-  isImageRotated: boolean;
-  isArrowRotated: boolean;
-}>`
-  transform: rotate(0deg);
-  overflow: hidden;
-  transition: all 0.3s ease-out;
-  -webkit-backface-visibility: hidden;
-
-  transform: ${({ isImageRotated, isArrowRotated }) =>
-    isImageRotated || isArrowRotated ? "rotate(90deg)" : "rotate(0deg)"};
+const ImageTestWrapper = styled.div`
+  margin: 50px auto;
+  width: 100px;
 `;
 
 const MyImage = styled.img<{ isArrowRotated: boolean }>`
@@ -217,6 +202,14 @@ const MyImage = styled.img<{ isArrowRotated: boolean }>`
   -moz-transform: rotate(90deg);
   -o-transform: rotate(90deg);
   -ms-transform: rotate(90deg);
+`;
+
+const MyImageMap = styled.img<{ isImageRotated: boolean }>`
+  display: block;
+  transition: all 0.4s ease;
+
+  transform: ${(props) =>
+    props.isImageRotated ? "rotate(90deg)" : "rotate(0deg)"};
 `;
 
 const Bar = styled.div`
@@ -237,11 +230,6 @@ const Bar = styled.div`
   :hover {
     cursor: pointer;
   }
-`;
-
-const ImageTestWrapper = styled.div`
-  margin: 50px auto;
-  width: 100px;
 `;
 
 export default Test;
