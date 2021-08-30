@@ -16,3 +16,11 @@ a {
 * {
   box-sizing: border-box;
 }
+
+image {
+  margin: 0px;
+}
+
+p {
+  margin: 0px;
+}

@@ -6,15 +6,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { Container, Row, Col, Tabs } from "react-bootstrap";
 import "animate.css";
+import { motion } from "framer-motion";
 import styled from "styled-components";
 
 const Test: NextPage = () => {
+  // Testing for tab switching
   const [tabState, setTabState] = useState({
     tab1: true,
     tab2: false,
   });
-
-  const [isImageRotated, setIsImageRotated] = useState(false);
 
   const switchTab1 = () => {
     console.log("tab 1");
@@ -31,21 +31,50 @@ const Test: NextPage = () => {
     });
   };
 
-  const rotateImage = () => {
-    setIsImageRotated(!isImageRotated);
+  // Testing for rotating ONE image
+
+  const [isArrowRotated, setIsArrowRotated] = useState(false);
+
+  const rotateArrow = () => {
+    setIsArrowRotated(!isArrowRotated);
+  };
+
+  // Testing for mapped image rotating component
+
+  const [isImageRotated, setIsImageRotated] = useState(false);
+
+  const [itemArray, setItemArray] = useState({
+    Item1: false,
+    Item2: false,
+    Item3: false,
+  });
+
+  const rotateImage = (key, value) => {
+    setItemArray({
+      ...itemArray,
+      [key]: !value,
+    });
+  };
+
+  const ItemArrayComponent: Function = (): JSX.Element[] => {
+    return Object.keys(itemArray).map((item: any, index: number) => (
+      <Bar key={index}>
+        <p style={{ fontSize: 40 }}>{item}</p>
+        <ImageRotateWrapper
+          isImageRotated={itemArray[item]}
+          //animate={itemArray[item] ? { rotate: 90 } : { rotate: 0 }}
+          onClick={() => rotateImage(item, itemArray[item])}
+        >
+          <Image src="/right-arrow.png" alt="Pokeball" width={50} height={50} />
+        </ImageRotateWrapper>
+      </Bar>
+    ));
   };
 
   return (
     <div>
       <TestWrapper>
         <h1>Testing Page</h1>
-        {/* <Image
-          src="https://source.unsplash.com/random/400x200"
-          alt="Pokeball"
-          width={400}
-          height={200}
-          // layout="fixed"
-        /> */}
       </TestWrapper>
 
       <BoxContainer>
@@ -97,22 +126,17 @@ const Test: NextPage = () => {
       </BoxContainer>
 
       <BoxContainer>
-        <ImageRotateWrapper
-          isImageRotated={isImageRotated}
-          onClick={() => rotateImage()}
-        >
-          <Image
-            src={
-              isImageRotated
-                ? "https://video-react.js.org/assets/logo.png"
-                : "https://www.shareicon.net/data/128x128/2016/08/01/640324_logo_512x512.png"
-            }
-            alt="Pokeball"
-            width={150}
-            height={150}
-          />
-        </ImageRotateWrapper>
+        <ItemArrayComponent />
       </BoxContainer>
+      <ImageTestWrapper onClick={() => rotateArrow()}>
+        <MyImage
+          src="/right-arrow.png"
+          alt="test"
+          width={50}
+          height={50}
+          isArrowRotated={isArrowRotated}
+        />
+      </ImageTestWrapper>
     </div>
   );
 };
@@ -168,35 +192,56 @@ const BoxBody = styled.div`
   // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 `;
 
-const MyImage = styled(Image)`
-  // rotate {
-  //   animation: rotate-keyframes 1s;
-  // }
-
-  // @keyframes rotate-keyframes {
-  //   from {
-  //     transform: rotate(0deg);
-  //   }
-
-  //   to {
-  //     transform: rotate(180deg);
-  //   }
-  // }
-
-  // overflow: hidden;
-  // transition-duration: 0.8s;
-  // transition-property: transform;
-  // :hover {
-  //   transform: rotate(360deg);
-  //   -webkit-transform: rotate(360deg);
-  // }
-`;
-
-const ImageRotateWrapper = styled.div<{ isImageRotated: boolean }>`
+const ImageRotateWrapper = styled.div<{
+  isImageRotated: boolean;
+  isArrowRotated: boolean;
+}>`
   transform: rotate(0deg);
   overflow: hidden;
   transition: all 0.3s ease-out;
-  transform: ${(props) => props.isImageRotated && "transform: rotate(360deg)"};
+  -webkit-backface-visibility: hidden;
+
+  transform: ${({ isImageRotated, isArrowRotated }) =>
+    isImageRotated || isArrowRotated ? "rotate(90deg)" : "rotate(0deg)"};
+`;
+
+const MyImage = styled.img<{ isArrowRotated: boolean }>`
+  display: block;
+  -webkit-transition: all 0.4s ease;
+  -moz-transition: all 0.4s ease;
+  -o-transition: all 0.4s ease;
+  transition: all 0.4s ease;
+
+  -webkit-transform: ${(props) =>
+    props.isArrowRotated ? "rotate(90deg)" : "rotate(0deg)"};
+  -moz-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+`;
+
+const Bar = styled.div`
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  width: 400px;
+  padding: 10px 20px;
+  margin: 10px 0px;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  //margin-left: 10%;
+  margin-top: 5%;
+  p {
+    margin: 0px;
+  }
+  :hover {
+    cursor: pointer;
+  }
+`;
+
+const ImageTestWrapper = styled.div`
+  margin: 50px auto;
+  width: 100px;
 `;
 
 export default Test;
