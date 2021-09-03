@@ -9,6 +9,8 @@ import "animate.css";
 import { motion } from "framer-motion";
 import styled from "styled-components";
 
+import Arrow from "../pages/components/Arrow";
+
 const Test: NextPage = () => {
   // Testing for tab switching
   const [tabState, setTabState] = useState({
@@ -41,24 +43,19 @@ const Test: NextPage = () => {
 
   // Testing for mapped image rotating component
 
-  const [itemArray, setItemArray] = useState([false, false, false]);
+  const [itemArray, setItemArray] = useState(["1", "2", "3"]);
 
-  const rotateImage = (index: number) => {
-    let newItemArray = [...itemArray];
-    newItemArray[index] = !newItemArray[index];
-    setItemArray(newItemArray);
-  };
+  // const rotateImage = (index: number) => {
+  //   let newItemArray = [...itemArray];
+  //   newItemArray[index] = !newItemArray[index];
+  //   setItemArray(newItemArray);
+  // };
 
   const ItemArrayComponent: Function = (): JSX.Element[] => {
-    return itemArray.map((item: boolean, index: number) => (
-      <ImageTestWrapper onClick={() => rotateImage(index)} key={index}>
-        <MyImageMap
-          src="/right-arrow.png"
-          alt="test"
-          width={50}
-          height={50}
-          isImageRotated={itemArray[index]}
-        />
+    return itemArray.map((item: string, index: number) => (
+      <ImageTestWrapper key={index}>
+        {item}
+        <Arrow item_name={item} />
       </ImageTestWrapper>
     ));
   };
@@ -121,7 +118,7 @@ const Test: NextPage = () => {
         <ItemArrayComponent />
       </BoxContainer>
 
-      <ImageTestWrapper onClick={() => rotateArrow()}>
+      {/* <ImageTestWrapper onClick={() => rotateArrow()}>
         <MyImage
           src="/right-arrow.png"
           alt="test"
@@ -129,7 +126,8 @@ const Test: NextPage = () => {
           height={50}
           isArrowRotated={isArrowRotated}
         />
-      </ImageTestWrapper>
+      </ImageTestWrapper> */}
+      <Arrow />
     </div>
   );
 };
